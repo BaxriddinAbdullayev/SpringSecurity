@@ -1,0 +1,12 @@
+### Create Task
+POST localhost:8080/task
+Content-Type: application/json
+
+{
+  "title": "Sartarosh",
+  "content": "Sartoroshga borish kerak"
+}
+
+
+### Delete Task by id
+DELETE localhost:8080/task/6171b8ad-de99-43fb-a70c-ba820f3afb4b
