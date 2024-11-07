@@ -1,0 +1,11 @@
+### Create Profile
+POST localhost:8080/profile/restration
+Content-Type: application/json
+
+{
+  "name": "Bahriddin",
+  "surname": "Abdullayev",
+  "phone": "9310517222",
+  "password": "1234",
+  "role": "ROLE_ADMIN"
+}

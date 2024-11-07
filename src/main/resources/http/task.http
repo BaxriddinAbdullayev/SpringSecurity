@@ -1,6 +1,7 @@
 ### Create Task
 POST localhost:8080/task
 Content-Type: application/json
+Authorization: Basic bWF6Z2k6MTIzNA==
 
 {
   "title": "Sartarosh",
@@ -8,5 +9,10 @@ Content-Type: application/json
 }
 
 
+### Get all
+GET localhost:8080/task
+
+
 ### Delete Task by id
-DELETE localhost:8080/task/6171b8ad-de99-43fb-a70c-ba820f3afb4b
+DELETE localhost:8080/task/dbebcd3d-7bb5-439e-8892-178205dedc4d
+Authorization: Basic bWF6Z2k6MTIzNA==
