@@ -1,7 +1,7 @@
 ### Create Task
 POST localhost:8080/task
 Content-Type: application/json
-Authorization: Basic bWF6Z2k6MTIzNA==
+Authorization: Basic OTMxMDUxNzM5OjEyMzQ=
 
 {
   "title": "Sartarosh",
@@ -13,6 +13,22 @@ Authorization: Basic bWF6Z2k6MTIzNA==
 GET localhost:8080/task
 
 
+### Update By Id
+PUT localhost:8080/task/d936cf30-e629-499f-a98e-732ca25e5267
+Content-Type: application/json
+Authorization: Basic OTMxMDUxNzM5OjEyMjI=
+
+{
+  "title": "Bozor N",
+  "content": "Sartoroshga borish kerak"
+}
+
+
 ### Delete Task by id
-DELETE localhost:8080/task/dbebcd3d-7bb5-439e-8892-178205dedc4d
-Authorization: Basic bWF6Z2k6MTIzNA==
+DELETE localhost:8080/task/d936cf30-e629-499f-a98e-732ca25e5267
+Authorization: Basic OTMxMDUxNzM5OjEyMjI=
+
+
+### Get all
+GET localhost:8080/task/finished/all
+Authorization: Basic OTMxMDUxNzM5OjEyMjI=
