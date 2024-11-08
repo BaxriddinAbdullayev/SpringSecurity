@@ -13,6 +13,7 @@ import java.util.List;
 
 public class CustomUserDetails implements UserDetails {
 
+    private String id;
     private String phone;
     private String password;
     private ProfileRole role;
@@ -23,6 +24,7 @@ public class CustomUserDetails implements UserDetails {
         this.password = profile.getPassword();
         this.role = profile.getRole();
         this.status = profile.getStatus();
+        this.id = profile.getId();
     }
 
     @Override
@@ -60,5 +62,13 @@ public class CustomUserDetails implements UserDetails {
     @Override
     public boolean isEnabled() {
         return true;
+    }
+
+    public GeneralStatus getStatus() {
+        return status;
+    }
+
+    public String getId() {
+        return id;
     }
 }

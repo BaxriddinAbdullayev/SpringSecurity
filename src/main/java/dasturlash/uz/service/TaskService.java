@@ -1,9 +1,16 @@
 package dasturlash.uz.service;
 
+import dasturlash.uz.config.CustomUserDetails;
 import dasturlash.uz.dto.TaskDTO;
+import dasturlash.uz.enums.ProfileRole;
+import dasturlash.uz.util.SpringSecurityUtil;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.UUID;
@@ -32,6 +39,14 @@ public class TaskService {
     }
 
     public TaskDTO create(TaskDTO dto) {
+
+        String profileId = SpringSecurityUtil.getCurrentProfileId();
+
+        List<String> roles = SpringSecurityUtil.getProfileRolesList();
+        if(roles.contains(ProfileRole.ROLE_ADMIN.name())){
+
+        }
+
         dto.setId(UUID.randomUUID().toString());
         dto.setCreatedDate(LocalDateTime.now());
         taskList.add(dto);
