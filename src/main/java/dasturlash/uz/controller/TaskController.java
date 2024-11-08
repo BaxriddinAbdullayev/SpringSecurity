@@ -27,24 +27,7 @@ public class TaskController {
     private final TaskService taskService;
 
     @PostMapping("")
-    public ResponseEntity<TaskDTO> create(@RequestBody TaskDTO dto,
-                                          Principal principal,
-                                          HttpServletRequest request,
-                                          Authentication authentication,
-                                          @AuthenticationPrincipal final CustomUserDetails customUserDetails) {
-        CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
-        System.out.println(userDetails.getStatus());
-
-
-        Principal userPrincipal = request.getUserPrincipal();
-        System.out.println(userPrincipal.getName());
-
-
-        System.out.println(customUserDetails.getUsername());
-        System.out.println(customUserDetails.getStatus());
-
-        System.out.println(principal.getName());
-        CustomUserDetails user = (CustomUserDetails) ((UsernamePasswordAuthenticationToken) principal).getPrincipal();
+    public ResponseEntity<TaskDTO> create(@RequestBody TaskDTO dto) {
         TaskDTO result = taskService.create(dto);
         return ResponseEntity.ok(result);
     }
@@ -67,9 +50,9 @@ public class TaskController {
         return ResponseEntity.ok(result);
     }
 
-    @GetMapping("/my/all")
+    @GetMapping("/my")
     public ResponseEntity<List<TaskDTO>> getMyTaskList() {
-        List<TaskDTO> result = taskService.getAll();
+        List<TaskDTO> result = taskService.getCurrentProfileTasksList();
         return ResponseEntity.ok(result);
     }
 
@@ -89,6 +72,12 @@ public class TaskController {
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable("id") String id) {
         taskService.delete(id);
+        return ResponseEntity.ok().build();
+    }
+
+    @DeleteMapping("/{id}/admin")
+    public ResponseEntity<Void> deleteAsAdmin(@PathVariable("id") String id) {
+        taskService.deleteAsAdmin(id);
         return ResponseEntity.ok().build();
     }
 }

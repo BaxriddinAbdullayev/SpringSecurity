@@ -3,9 +3,9 @@ POST localhost:8080/profile/restration
 Content-Type: application/json
 
 {
-  "name": "G'ani",
-  "surname": "G'aniyev",
-  "phone": "222222222",
-  "password": "2222",
-  "role": "ROLE_MANAGER"
+  "name": "Hoshim",
+  "surname": "Hoshimov",
+  "phone": "333333333",
+  "password": "3333",
+  "role": "ROLE_STUDENT"
 }

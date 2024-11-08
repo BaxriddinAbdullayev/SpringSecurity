@@ -48,6 +48,7 @@ public class SpringConfig {
                     .requestMatchers(HttpMethod.GET,"/task","/task/*").permitAll()
 //                    .requestMatchers(HttpMethod.GET,"/task/*").permitAll() // /task/ /task/{aa-bb-ss-dd} /task/active
                     .requestMatchers("/task/finished/all").hasAnyRole("USER","ADMIN","MANAGER")
+                    .requestMatchers(HttpMethod.DELETE, "/task/*/admin").hasAnyRole("ADMIN")
 //                    .requestMatchers(HttpMethod.GET,"/task/**").permitAll() // /task/ /task/{aa-bb-ss-dd} /task/active  /task/active/all  /task/active/all/ball/dkfdjf
 //                    .requestMatchers("/task/finished/all","/task/my/all").permitAll()
                     .anyRequest()

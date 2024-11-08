@@ -1,11 +1,11 @@
 ### Create Task
 POST localhost:8080/task
 Content-Type: application/json
-Authorization: Basic OTMxMDUxNzM5OjEyMzQ=
+Authorization: Basic MjIyMjIyMjIyOjIyMjI=
 
 {
-  "title": "Sartarosh",
-  "content": "Sartoroshga borish kerak"
+  "title": "Kursga",
+  "content": "Kursga borish kerak"
 }
 
 
@@ -13,22 +13,27 @@ Authorization: Basic OTMxMDUxNzM5OjEyMzQ=
 GET localhost:8080/task
 
 
+### Get all task
+GET localhost:8080/task/my
+Authorization: Basic OTMxMDUxNzM5OjEyMzQ=
+
+
 ### Update By Id
-PUT localhost:8080/task/d936cf30-e629-499f-a98e-732ca25e5267
+PUT localhost:8080/task/ff808081930b979401930b9e69500002
 Content-Type: application/json
-Authorization: Basic OTMxMDUxNzM5OjEyMjI=
+Authorization: Basic OTMxMDUxNzM5OjEyMzQ=
 
 {
-  "title": "Bozor N",
+  "title": "Dars N",
   "content": "Sartoroshga borish kerak"
 }
 
 
 ### Delete Task by id
-DELETE localhost:8080/task/d936cf30-e629-499f-a98e-732ca25e5267
-Authorization: Basic OTMxMDUxNzM5OjEyMjI=
+DELETE localhost:8080/task/ff808081930b90ae01930b93f9a70001
+Authorization: Basic OTMxMDUxNzM5OjEyMzQ=
 
 
-### Get all
-GET localhost:8080/task/finished/all
-Authorization: Basic OTMxMDUxNzM5OjEyMjI=
+### Delete Task By Admin
+DELETE localhost:8080/task/ff808081930b90ae01930b93f9a70001/admin
+Authorization: Basic OTMxMDUxNzM5OjEyMzQ=
