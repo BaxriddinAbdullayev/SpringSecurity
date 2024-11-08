@@ -8,7 +8,9 @@ import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -22,11 +24,13 @@ import java.util.List;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/task")
+@EnableMethodSecurity
 public class TaskController {
 
     private final TaskService taskService;
 
     @PostMapping("")
+    @PreAuthorize("hasRole('ROLE_USER')")
     public ResponseEntity<TaskDTO> create(@RequestBody TaskDTO dto) {
         TaskDTO result = taskService.create(dto);
         return ResponseEntity.ok(result);
@@ -45,6 +49,7 @@ public class TaskController {
     }
 
     @GetMapping("/finished/all")
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_USER')")
     public ResponseEntity<List<TaskDTO>> getFenished() {
         List<TaskDTO> result = taskService.getAll();
         return ResponseEntity.ok(result);
@@ -63,6 +68,7 @@ public class TaskController {
     }
 
     @PutMapping("/{id}")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<Boolean> update(@RequestBody TaskDTO student,
                                           @PathVariable("id") String id) {
         Boolean result = taskService.update(student, id);
@@ -70,6 +76,7 @@ public class TaskController {
     }
 
     @DeleteMapping("/{id}")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<Void> delete(@PathVariable("id") String id) {
         taskService.delete(id);
         return ResponseEntity.ok().build();

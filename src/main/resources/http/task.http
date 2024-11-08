@@ -19,12 +19,12 @@ Authorization: Basic OTMxMDUxNzM5OjEyMzQ=
 
 
 ### Update By Id
-PUT localhost:8080/task/ff808081930b979401930b9e69500002
+PUT localhost:8080/task/ff808081930b90ae01930b91a0210000
 Content-Type: application/json
 Authorization: Basic OTMxMDUxNzM5OjEyMzQ=
 
 {
-  "title": "Dars N",
+  "title": "Relax",
   "content": "Sartoroshga borish kerak"
 }
 
