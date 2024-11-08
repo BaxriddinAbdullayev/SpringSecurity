@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>CORS</title>
+</head>
+<body>
+
+<h1>CORS request example</h1>
+<p>Bu namuna <code>http://localhost:8080/task</code> api-ga oddiy get request jo'natadi va natijani ko'rsatadi.</p>
+<button onclick="makeRequest()"> Make GET request</button>
+<br>
+<br>
+<div id="result">Request Result</div>
+</body>
+
+</html>
+<script>
+    function makeRequest() {
+        var xhttps = new XMLHttpRequest();
+
+        xhttps.onreadystatechange = function () {
+            document.getElementById("result").innerText = this.responseText;
+        };
+        xhttps.open("GET", "http://localhost:8080/task", false);
+        xhttps.send();
+    }
+</script>

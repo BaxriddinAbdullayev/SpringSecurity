@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>CORS</title>
+</head>
+<body>
+
+<h1>CORS request example</h1>
+<p>Bu namuna <code>http://localhost:8080/task</code> api-ga oddiy POST request jo'natadi va natijani ko'rsatadi.</p>
+<button onclick="makeRequest()"> Make POST request</button>
+<br>
+<br>
+<div id="result">Request Result</div>
+</body>
+
+
+</html>
+<script>
+
+</script>
+<script>
+  function makeRequest() {
+    var xhttps = new XMLHttpRequest();
+    var taskObj = {
+      title: "SpringSecurity o'rganish",
+      content: "Spring Security video darslarini barchsini ko'rish kerak."
+    };
+    var jsonBody = JSON.stringify(taskObj);
+
+    xhttps.onreadystatechange = function () {
+      document.getElementById("result").innerText = "Yani task yaratildi:\n" + this.responseText;
+    };
+
+    xhttps.open("POST", "http://localhost:8080/task", true);
+    xhttps.setRequestHeader('Content-Type', 'application/json');
+    xhttps.send(jsonBody);
+  }
+</script>
