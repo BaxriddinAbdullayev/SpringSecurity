@@ -1,7 +1,7 @@
 ### Create Task
 POST localhost:8080/task
 Content-Type: application/json
-Authorization: Basic MjIyMjIyMjIyOjIyMjI=
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjoiUk9MRV9TVFVERU5UIiwic3ViIjoiMzMzMzMzMzMzIiwiaWF0IjoxNzMxMTY1NjA2LCJleHAiOjE3MzM3NTc2MDZ9.NCrqd-Hr6iYvd0IBoYpFRbd6SHSZHAlXiDFw9Kj1Sw0
 
 {
   "title": "Kursga",
@@ -13,9 +13,9 @@ Authorization: Basic MjIyMjIyMjIyOjIyMjI=
 GET localhost:8080/task
 
 
-### Get all task
+### Get all my task
 GET localhost:8080/task/my
-Authorization: Basic OTMxMDUxNzM5OjEyMzQ=
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjoiUk9MRV9TVFVERU5UIiwic3ViIjoiMzMzMzMzMzMzIiwiaWF0IjoxNzMxMTYxNjAwLCJleHAiOjE3MzEyNDgwMDB9.rvH4IpNk3JQouq6lvOsYzyXSXjdebugq_JEi0pQ69dg
 
 
 ### Update By Id

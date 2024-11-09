@@ -13,4 +13,6 @@ public class ProfileDTO {
     private String phone;
     private String password;
     private ProfileRole role;
+    private String accessToken;
+    private String refreshToken;
 }

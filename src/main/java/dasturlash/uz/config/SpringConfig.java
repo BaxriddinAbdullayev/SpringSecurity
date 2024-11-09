@@ -1,22 +1,21 @@
 package dasturlash.uz.config;
 
-import dasturlash.uz.util.MD5Util;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
-import org.springframework.security.config.Customizer;
+import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.NoOpPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
@@ -27,13 +26,21 @@ import java.util.Arrays;
 @EnableWebSecurity
 public class SpringConfig {
 
+
     private final UserDetailsService userDetailsService;
+    private final JwtAuthenticationFilter jwtAuthenticationFilter;
+
+    public static final String[] AUTH_WHITELIST = {
+            "/profile/restration",
+            "/profile/authorization",
+            "/profile/refresh-token"
+    };
 
     @Bean
     public AuthenticationProvider authenticationProvider(BCryptPasswordEncoder bCryptPasswordEncoder) {
         // authentication - Foydalanuvchini identifikatsiya qilish.
         // Ya'ni berilgan login va parolli user bor yoki yo'qligini aniqlash.
-        final DaoAuthenticationProvider authenticationProvider =new DaoAuthenticationProvider();
+        final DaoAuthenticationProvider authenticationProvider = new DaoAuthenticationProvider();
         authenticationProvider.setUserDetailsService(userDetailsService);
 //        authenticationProvider.setPasswordEncoder(NoOpPasswordEncoder.getInstance());
 //        authenticationProvider.setPasswordEncoder(passwordEncoder);
@@ -48,28 +55,29 @@ public class SpringConfig {
 
         http.authorizeHttpRequests(authorizationManagerRequestMatcherRegistry -> {
             authorizationManagerRequestMatcherRegistry
-                    .requestMatchers("/profile/restration").permitAll()
-                    .requestMatchers(HttpMethod.GET,"/task","/task/*").permitAll()
+                    .requestMatchers(AUTH_WHITELIST).permitAll()
+                    .requestMatchers(HttpMethod.GET, "/task", "/task/*").permitAll()
 //                    .requestMatchers(HttpMethod.GET,"/task/*").permitAll() // /task/ /task/{aa-bb-ss-dd} /task/active
-                    .requestMatchers("/task/finished/all").hasAnyRole("USER","ADMIN","MANAGER")
+                    .requestMatchers("/task/finished/all").hasAnyRole("USER", "ADMIN", "MANAGER")
                     .requestMatchers(HttpMethod.DELETE, "/task/*/admin").hasAnyRole("ADMIN")
 //                    .requestMatchers(HttpMethod.GET,"/task/**").permitAll() // /task/ /task/{aa-bb-ss-dd} /task/active  /task/active/all  /task/active/all/ball/dkfdjf
 //                    .requestMatchers("/task/finished/all","/task/my/all").permitAll()
                     .anyRequest()
                     .authenticated();
-        });
-        http.httpBasic(Customizer.withDefaults());
+        }).addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
+
+//        http.httpBasic(Customizer.withDefaults());
         http.csrf(AbstractHttpConfigurer::disable);
 //        http.cors(AbstractHttpConfigurer::disable);
 
         http.cors(httpSecurityCorsConfigurer -> {
-            CorsConfiguration corsConfiguration =new CorsConfiguration();
+            CorsConfiguration corsConfiguration = new CorsConfiguration();
             corsConfiguration.setAllowedOriginPatterns(Arrays.asList("*"));
             corsConfiguration.setAllowedMethods(Arrays.asList("*"));
             corsConfiguration.setAllowedHeaders(Arrays.asList("*"));
 
-            UrlBasedCorsConfigurationSource source=new UrlBasedCorsConfigurationSource();
-            source.registerCorsConfiguration("/**",corsConfiguration);
+            UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+            source.registerCorsConfiguration("/**", corsConfiguration);
 
             httpSecurityCorsConfigurer.configurationSource(source);
         });
@@ -78,8 +86,13 @@ public class SpringConfig {
     }
 
     @Bean
-    public BCryptPasswordEncoder bCryptPasswordEncoder(){
+    public BCryptPasswordEncoder bCryptPasswordEncoder() {
         return new BCryptPasswordEncoder();
+    }
+
+    @Bean
+    public AuthenticationManager authenticationManager(AuthenticationConfiguration config) throws Exception {
+        return config.getAuthenticationManager();
     }
 
 //    @Bean

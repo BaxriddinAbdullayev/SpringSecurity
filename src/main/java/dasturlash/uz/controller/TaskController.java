@@ -2,6 +2,8 @@ package dasturlash.uz.controller;
 
 import dasturlash.uz.config.CustomUserDetails;
 import dasturlash.uz.dto.TaskDTO;
+import dasturlash.uz.dto.TokenDTO;
+import dasturlash.uz.service.ProfileService;
 import dasturlash.uz.service.TaskService;
 import dasturlash.uz.util.SpringSecurityUtil;
 import jakarta.servlet.http.HttpServletRequest;
@@ -28,9 +30,10 @@ import java.util.List;
 public class TaskController {
 
     private final TaskService taskService;
+    private final ProfileService profileService;
 
     @PostMapping("")
-    @PreAuthorize("hasRole('ROLE_USER')")
+    @PreAuthorize("hasRole('ROLE_STUDENT')")
     public ResponseEntity<TaskDTO> create(@RequestBody TaskDTO dto) {
         TaskDTO result = taskService.create(dto);
         return ResponseEntity.ok(result);
@@ -56,6 +59,7 @@ public class TaskController {
     }
 
     @GetMapping("/my")
+    @PreAuthorize("hasRole('ROLE_STUDENT')")
     public ResponseEntity<List<TaskDTO>> getMyTaskList() {
         List<TaskDTO> result = taskService.getCurrentProfileTasksList();
         return ResponseEntity.ok(result);

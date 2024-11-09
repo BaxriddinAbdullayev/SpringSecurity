@@ -18,6 +18,8 @@ public class CustomUserDetails implements UserDetails {
     private String password;
     private ProfileRole role;
     private GeneralStatus status;
+    private String name;
+    private String surname;
 
     public CustomUserDetails(ProfileEntity profile) {
         this.phone = profile.getPhone();
@@ -25,6 +27,8 @@ public class CustomUserDetails implements UserDetails {
         this.role = profile.getRole();
         this.status = profile.getStatus();
         this.id = profile.getId();
+        this.name = profile.getName();
+        this.surname = profile.getSurname();
     }
 
     @Override
@@ -70,5 +74,17 @@ public class CustomUserDetails implements UserDetails {
 
     public String getId() {
         return id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getSurname() {
+        return surname;
+    }
+
+    public ProfileRole getRole() {
+        return role;
     }
 }

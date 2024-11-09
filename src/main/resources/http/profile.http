@@ -1,4 +1,4 @@
-### Create Profile
+### Registration Profile
 POST localhost:8080/profile/restration
 Content-Type: application/json
 
@@ -8,4 +8,23 @@ Content-Type: application/json
   "phone": "333333333",
   "password": "3333",
   "role": "ROLE_STUDENT"
+}
+
+
+### Authorization Profile
+POST localhost:8080/profile/authorization
+Content-Type: application/json
+
+{
+  "phone": "333333333",
+  "password": "3333"
+}
+
+
+### Update AccessToken
+POST localhost:8080/profile/refresh-token
+Content-Type: application/json
+
+{
+  "refreshToken": "eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjoiUk9MRV9TVFVERU5UIiwic3ViIjoiMzMzMzMzMzMzIiwiaWF0IjoxNzMxMTY1NjA2LCJleHAiOjE3MzEyNTIwMDZ9.W0442A2_TOKeLmbU1QrXhZG4yt0TEEaTp5KeaA5joHI"
 }
